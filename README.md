@@ -8,7 +8,7 @@ Users sign up with their mobile number (OTP), complete a short profile (personal
 | --- | --- |
 | Android APK | _add Google Drive link_ |
 | Demo video | _add YouTube/Drive link_ |
-| Backend (Render) | _add URL, e.g. `https://creditsea-loan-api.onrender.com/api/v1/health`_ |
+| Backend API (Render) | `https://creditsea-loan-api.onrender.com/api/v1` · [health check](https://creditsea-loan-api.onrender.com/api/v1/health) |
 
 ---
 
@@ -112,7 +112,7 @@ flutter build apk --release --dart-define=API_BASE_URL=https://<your-api>/api/v1
 # -> app/build/app/outputs/flutter-apk/app-release.apk
 ```
 
-Release builds only allow HTTPS, so point them at the deployed backend. Debug builds also allow plain HTTP for a local backend.
+Release builds only allow HTTPS, so point them at the deployed backend. Debug builds also allow plain HTTP for a local backend. The APK linked above is built with `API_BASE_URL=https://creditsea-loan-api.onrender.com/api/v1`.
 
 ## Deployment (MongoDB Atlas + Render)
 
