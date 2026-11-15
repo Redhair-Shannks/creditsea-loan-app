@@ -6,6 +6,7 @@ services:
     runtime: node
     rootDir: backend
     plan: free
+    region: singapore # closest Render region to India; put the Atlas cluster in Singapore (or Mumbai) too
     buildCommand: npm ci --omit=dev
     startCommand: npm start
     healthCheckPath: /api/v1/health

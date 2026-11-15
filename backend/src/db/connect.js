@@ -18,7 +18,7 @@ export async function connectDatabase(uri = env.MONGODB_URI) {
   }
 
   mongoose.set('strictQuery', true);
-  await mongoose.connect(mongoUri);
+  await mongoose.connect(mongoUri, { dbName: env.MONGODB_DB_NAME });
   await mongoose.connection.syncIndexes();
   logger.info(`MongoDB connected (database "${mongoose.connection.name}")`);
 }
