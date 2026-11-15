@@ -8,7 +8,7 @@ Users sign up with their mobile number (OTP), complete a short profile (personal
 | --- | --- |
 | Android APK | _add Google Drive link_ |
 | Demo video | _add YouTube/Drive link_ |
-| Backend (Render) | _add URL, e.g. `https://creditsea-loan-api.onrender.com/api/v1/health`_ |
+| Backend API (Render) | `https://creditsea-loan-api.onrender.com/api/v1` · [health check](https://creditsea-loan-api.onrender.com/api/v1/health) |
 
 ---
 
@@ -34,7 +34,7 @@ Users sign up with their mobile number (OTP), complete a short profile (personal
 - **App:** Flutter 3.50 (Dart 3.14), GetX 4.7 (state, routing, DI, GetConnect HTTP), GetStorage, intl
 - **Backend:** Node.js (ESM), Express 5, Mongoose 9 / MongoDB, Zod validation, JWT sessions, bcrypt, Helmet, rate limiting
 - **Tests:** `node:test` + Supertest + in-memory MongoDB (28 API/unit tests); Flutter unit, controller and widget tests
-- **CI:** GitHub Actions runs both test suites and builds the release APK
+- **CI:** GitHub Actions runs both test suites and builds the release APK; a scheduled job keeps the free Render server awake
 
 ## Project structure
 
@@ -62,7 +62,9 @@ creditsea-loan-app/
 │   │   └── server.js            DB connection, HTTP server, lifecycle scheduler
 │   └── tests/
 ├── render.yaml                  one-click Render deployment
-└── .github/workflows/ci.yml
+└── .github/workflows/
+    ├── ci.yml                   tests + release APK (pushes to main, pull requests)
+    └── keep-alive.yml           pings the API so Render's free plan doesn't sleep
 ```
 
 ## How GetX is used
@@ -112,7 +114,7 @@ flutter build apk --release --dart-define=API_BASE_URL=https://<your-api>/api/v1
 # -> app/build/app/outputs/flutter-apk/app-release.apk
 ```
 
-Release builds only allow HTTPS, so point them at the deployed backend. Debug builds also allow plain HTTP for a local backend.
+Release builds only allow HTTPS, so point them at the deployed backend. Debug builds also allow plain HTTP for a local backend. The APK linked above is built with `API_BASE_URL=https://creditsea-loan-api.onrender.com/api/v1`.
 
 ## Deployment (MongoDB Atlas + Render)
 
@@ -121,7 +123,7 @@ Release builds only allow HTTPS, so point them at the deployed backend. Debug bu
 3. Paste the Atlas connection string into `MONGODB_URI` and deploy.
 4. Build the APK with `API_BASE_URL=https://<service>.onrender.com/api/v1` (or set it as the `API_BASE_URL` repository variable so CI builds it).
 
-The free Render plan sleeps when idle, so the first request can take ~50 s. The app's request timeout allows for this.
+The free Render plan sleeps after 15 minutes without traffic, and the next request can then take ~50 s (the app's request timeout allows for this). To avoid that, the **Keep API awake** workflow (`.github/workflows/keep-alive.yml`) pings the health check every 5 minutes; one always-on service fits in Render's 750 free hours a month. Disable it from the Actions tab when it is no longer needed.
 
 ## Demo guide
 
