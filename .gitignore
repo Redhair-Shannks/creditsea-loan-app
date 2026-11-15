@@ -1,0 +1,22 @@
+# Backend
+backend/node_modules/
+backend/.env
+backend/coverage/
+
+# Secrets / local config
+.env
+*.keystore
+*.jks
+key.properties
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.iml
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# The Flutter app keeps its own app/.gitignore (build/, .dart_tool/, ...).
