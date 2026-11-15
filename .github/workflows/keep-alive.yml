@@ -1,0 +1,29 @@
+name: Keep API awake
+
+# Render's free plan stops the server after 15 minutes without traffic, and the next request
+# then waits 30-50 s while it starts again. Pinging the health check every few minutes keeps
+# it running, so the app responds immediately while it is being reviewed.
+# One always-on service fits in Render's 750 free instance hours a month.
+# Turn it off afterwards: Actions > Keep API awake > ... > Disable workflow.
+on:
+  schedule:
+    - cron: '2-59/5 * * * *' # every 5 minutes, avoiding the top of the hour (GitHub's busiest time)
+  workflow_dispatch:
+
+permissions: {}
+
+env:
+  HEALTH_URL: https://creditsea-loan-api.onrender.com/api/v1/health
+
+jobs:
+  ping:
+    name: Ping the health check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: GET /api/v1/health
+        run: |
+          curl --fail --silent --show-error --max-time 100 \
+            --retry 2 --retry-delay 15 --retry-all-errors \
+            --write-out '\nHTTP %{http_code} in %{time_total}s\n' \
+            "$HEALTH_URL"
