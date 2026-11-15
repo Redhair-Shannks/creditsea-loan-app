@@ -16,6 +16,8 @@ const schema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(4000),
   MONGODB_URI: z.string().trim().optional(),
+  // Database used inside the cluster, so a plain Atlas connection string works as-is.
+  MONGODB_DB_NAME: z.string().trim().min(1).default('creditsea'),
   JWT_SECRET: z.string().min(16, 'JWT_SECRET must be at least 16 characters').optional(),
   JWT_EXPIRES_IN_DAYS: z.coerce.number().int().positive().default(30),
   CORS_ORIGINS: z.string().optional(),
