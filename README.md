@@ -6,8 +6,8 @@ Users sign up with their mobile number (OTP), complete a short profile (personal
 
 | Deliverable | Link |
 | --- | --- |
-| Android APK | _add Google Drive link_ |
-| Demo video | _add YouTube/Drive link_ |
+| Android APK | [CreditSea-Loan-App-v1.0.0.apk](https://drive.google.com/file/d/1ZPcEjYJzcTUQKfh9xsLvZmE2_nX2HWNw/view?usp=drive_link) · [Drive folder with a testing guide](https://drive.google.com/drive/folders/13TICuGtKnVqZf8S9s5gdS6Qq3kBh7j_j?usp=drive_link) |
+| Demo video (Android) | [Watch on Google Drive](https://drive.google.com/file/d/1xsKoQSX4D-QKddWXJqpn89lVYr3DM6yE/view?usp=drive_link) |
 | Backend API (Render) | `https://creditsea-loan-api.onrender.com/api/v1` · [health check](https://creditsea-loan-api.onrender.com/api/v1/health) |
 
 ---
